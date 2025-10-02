@@ -1,0 +1,132 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Dave{% endblock %}</title>
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+  <!-- Your styles -->
+  <link href="{% static 'dave/css/main.css' %}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Layout: desktop sidebar + content -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Desktop sidebar (md and up) -->
+    <aside id="desktopSidebar" class="col-md-3 col-lg-2 d-none d-md-block bg-white border-end min-vh-100 p-0">
+      <div class="position-sticky top-0 p-3">
+        {% block sidebar %}
+          {% include "partials/_sidebar.html" %}
+        {% endblock %}
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="col-12 col-md-9 col-lg-10">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid d-flex align-items-center">
+                <!-- Mobile: sidebar toggle button (left) -->
+                <button class="btn btn-outline-purple me-2 d-md-none"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#appSidebar"
+                        aria-controls="appSidebar"
+                        aria-label="Open menu">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <!-- Desktop: sidebar toggle button -->
+                <button id="sidebarToggleDesktop" class="btn btn-outline-secondary d-none d-md-inline me-2"
+                        type="button" aria-label="Toggle sidebar">
+                <i class="bi bi-layout-sidebar-inset"></i>
+                </button>
+
+                <!-- Brand -->
+                <a class="navbar-brand fw-bold text-purple" href="/">Dave</a>
+
+                <!-- Right: user section -->
+                <div id="nav-user-section" class="d-flex align-items-center ms-auto">
+                    {% if request.user.is_authenticated %}
+                    <a class="nav-link text-decoration-none" href="{% url 'account_settings' %}" title="profile">
+                        {{ request.user.username }}
+                    </a>
+                    <form method="post" action="{% url 'logout' %}" class="ms-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link p-0 m-0 text-purple" title="Logout" aria-label="Logout">
+                        <i class="bi bi-box-arrow-right fs-5"></i>
+                        </button>
+                    </form>
+                    {% else %}
+                    <a class="btn btn-outline-purple" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </div>
+                </div>
+            </nav>
+        </div>
+        <div class="row m-2 me-0">
+        {% block content %}{% endblock %}
+        </div>
+    </main>
+  </div>
+</div>
+
+<!-- Mobile offcanvas sidebar -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="appSidebar" aria-labelledby="appSidebarLabel"
+     data-bs-scroll="true" data-bs-backdrop="true">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="appSidebarLabel">Menu</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <div class="p-3">
+      {% block sidebar_mobile %}
+        {% include "partials/_sidebar.html" %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Optional: auto-close offcanvas when clicking a link inside it -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const offcanvasEl = document.getElementById('appSidebar');
+    if (!offcanvasEl) return;
+
+    offcanvasEl.addEventListener('click', function (e) {
+      const target = e.target.closest('a.nav-link, a.dropdown-item, a.list-group-item');
+      if (target) {
+        const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+        if (offcanvas) offcanvas.hide();
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById("sidebarToggleDesktop");
+    const sidebar = document.getElementById("desktopSidebar");
+
+    toggleBtn.addEventListener("click", function() {
+      sidebar.classList.toggle("d-md-block");     // hide sidebar
+      // Optional: also adjust content width by toggling Bootstrap cols
+      const main = document.querySelector("main");
+      if (main) {
+        main.classList.toggle("col-md-9");
+        main.classList.toggle("col-lg-10");
+        main.classList.toggle("col-12");
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

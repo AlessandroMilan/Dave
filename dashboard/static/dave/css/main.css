@@ -1,0 +1,32 @@
+.text-purple {
+    color: var(--bs-purple) !important;
+}
+
+.btn-outline-purple {
+    --bs-btn-color: var(--bs-purple);
+    --bs-btn-border-color: var(--bs-purple);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bs-purple);
+    --bs-btn-hover-border-color: var(--bs-purple);
+    --bs-btn-focus-shadow-rgb: 13, 202, 240;
+    --bs-btn-active-color: var(--bs-white);
+    --bs-btn-active-bg: var(--bs-purple);
+    --bs-btn-active-border-color: var(--bs-purple);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--bs-purple);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--bs-purple);
+    --bs-gradient: none;
+}
+
+.nav-link.active {
+  background: rgba(128, 0, 128, 0.06); /* light purple wash */
+  border-radius: .375rem;
+}
+.text-purple { color: #6f42c1; }         /* example brand color */
+.btn-outline-purple { color:#6f42c1; border-color:#6f42c1; }
+.btn-outline-purple:hover { color:#fff; background:#6f42c1; }
+
+.vh-99 {
+    height: 99vh !important;
+}

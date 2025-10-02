@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home · Dave{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+  <i class="bi bi-activity display-1 text-purple mb-4"></i>
+  <h1 class="display-4 fw-bold text-purple">Dave</h1>
+  <p class="lead text-muted">Epidemiological Surveillance</p>
+  <div class="col-lg-6 mx-auto">
+    <p class="mb-4">
+      Welcome to <strong>Dave</strong>, a platform designed to support modern epidemiological surveillance
+      through intuitive dashboards, robust analytics, and timely reporting tools.
+    </p>
+
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}" class="btn btn-secondary btn-lg px-4 gap-3">
+            <i class="bi bi-box-arrow-in-right me-2"></i> Login
+        </a>
+        {% endif %}
+      <a href="#learn-more" class="btn btn-outline-purple btn-lg px-4">
+        Learn More
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Optional: section to expand -->
+<section id="learn-more" class="container my-5">
+  <div class="row g-5">
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <i class="bi bi-bar-chart-line display-5 text-purple mb-3"></i>
+          <h5 class="card-title">Data Insights</h5>
+          <p class="card-text">Interactive charts and reports for real-time epidemiological monitoring.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <i class="bi bi-people display-5 text-purple mb-3"></i>
+          <h5 class="card-title">Collaboration</h5>
+          <p class="card-text">Designed for health teams, policymakers, and researchers to collaborate effectively.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <i class="bi bi-shield-check display-5 text-purple mb-3"></i>
+          <h5 class="card-title">Secure Platform</h5>
+          <p class="card-text">Built with strong access controls and security measures to protect sensitive health data.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
